@@ -62,7 +62,7 @@ https://vulmon.com
         $json_request_data = $json_request_data + '}'
 
         $postParams = @{querydata = $json_request_data}
-        return (Invoke-WebRequest -Uri https://vulmon.com/scannerapi_vv211 -Method POST -Body $postParams).Content
+        return (Invoke-WebRequest -UseBasicParsing -Uri https://vulmon.com/scannerapi_vv211 -Method POST -Body $postParams).Content
     }
     function Get-ProductList() {
         $registry_paths = ("HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall") 
@@ -97,7 +97,7 @@ https://vulmon.com
     }   
     function Get-Exploit($ExploitID) {  
         $request1 = Invoke-WebRequest -Uri ('http://vulmon.com/downloadexploit?qid=' + $ExploitID) -UserAgent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0";
-        Invoke-WebRequest -Uri ('http://vulmon.com/downloadexploit?qid=' + $ExploitID) -UserAgent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0" -OutFile ( ($request1.Headers."Content-Disposition" -split "=")[1]);
+        Invoke-WebRequest -UseBasicParsing -Uri ('http://vulmon.com/downloadexploit?qid=' + $ExploitID) -UserAgent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0" -OutFile ( ($request1.Headers."Content-Disposition" -split "=")[1]);
     }
     function Out-Result($product_list) {
         $product_list = $product_list.Substring(0, $product_list.Length - 1)
